@@ -1,0 +1,73 @@
+﻿@page "/fetchdata"
+@using WeatherModule.Client
+@using WeatherModule.Shared
+@inherits OwningComponentBase<WeatherHubClient>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server via SignalR. If subscribed, the client will receive weather data every 5 seconds.</p>
+<div>
+    <button @onclick="Subscribe">Subscribe</button>
+    <button @onclick="Unsubscribe">Unsubscribe</button>
+</div>
+
+@if (forecasts == null)
+{
+    <p><em>No weather data received yet...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Service.EnsureConnectionStartedAsync();
+        Service.ReceivedWeatherUpdate += WeatherClient_ReceivedWeatherUpdate;
+    }
+
+    public async Task Subscribe()
+    {
+        await Service.Subscribe();
+    }
+
+    public async Task Unsubscribe()
+    {
+        await Service.Unubscribe();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        Service.ReceivedWeatherUpdate -= WeatherClient_ReceivedWeatherUpdate;
+        base.Dispose(disposing);
+    }
+
+    private void WeatherClient_ReceivedWeatherUpdate(object sender, ReceivedWeatherUpdateEventArgs args)
+    {
+        forecasts = args.Data;
+        StateHasChanged();
+    }
+}

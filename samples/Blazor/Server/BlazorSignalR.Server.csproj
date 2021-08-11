@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\SignalR.Modules.Generator\SignalR.Modules.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\..\src\SignalR.Modules\SignalR.Modules.csproj" />
+    <ProjectReference Include="..\ChatModule.Server\ChatModule.Server.csproj" />
+    <ProjectReference Include="..\Client\BlazorSignalR.Client.csproj" />
+    <ProjectReference Include="..\WeatherModule.Server\WeatherModule.Server.csproj" />
+  </ItemGroup>
+
+
+</Project>

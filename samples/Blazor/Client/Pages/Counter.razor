@@ -1,0 +1,29 @@
+﻿@using SignalR.Modules.Client;
+@page "/counter"
+@inherits OwningComponentBase<SignalRCounter>
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount = 0;
+    
+	protected override async Task OnInitializedAsync()
+	{
+		Service.On<int>("ReceiveCount", (count) =>
+		{
+			currentCount = count;
+			StateHasChanged();
+		});
+
+		await Service.EnsureConnectionStartedAsync();
+	}
+
+    private async Task IncrementCount()
+    {
+        currentCount = await Service.InvokeAsync<int>("IncrementCount");
+    }
+}
