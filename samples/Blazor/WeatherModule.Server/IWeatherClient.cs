@@ -4,7 +4,7 @@ using WeatherModule.Shared;
 
 namespace WeatherModule.Server
 {
-    public interface IWeatherHub
+    public interface IWeatherClient
     {
         public Task ReceiveWeatherUpdate(IEnumerable<WeatherForecast> weatherForecast);
     }

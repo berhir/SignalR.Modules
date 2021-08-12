@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace WeatherModule.Server
 {
-    public class WeatherHub : ModuleHub<IWeatherHub>
+    public class WeatherHub : ModuleHub<IWeatherClient>
     {
         public const string WeatherUpdatesGroupName = "WeatherUpdates";
 

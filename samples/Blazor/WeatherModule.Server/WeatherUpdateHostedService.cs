@@ -17,10 +17,10 @@ namespace WeatherModule.Server
         };
 
         private readonly ILogger<WeatherUpdateHostedService> _logger;
-        private readonly IModuleHubContext<WeatherHub, IWeatherHub> _hubContext;
+        private readonly IModuleHubContext<WeatherHub, IWeatherClient> _hubContext;
         private Timer _timer;
 
-        public WeatherUpdateHostedService(ILogger<WeatherUpdateHostedService> logger, IModuleHubContext<WeatherHub, IWeatherHub> hubContext)
+        public WeatherUpdateHostedService(ILogger<WeatherUpdateHostedService> logger, IModuleHubContext<WeatherHub, IWeatherClient> hubContext)
         {
             _logger = logger;
             _hubContext = hubContext;
