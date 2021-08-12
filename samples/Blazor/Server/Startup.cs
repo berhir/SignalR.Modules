@@ -32,7 +32,7 @@ namespace BlazorSignalR.Server
                     new[] { "application/octet-stream" });
             });
 
-            services.AddSignalRModuleHub<MainHub>();
+            services.AddSignalRModules<MainHub>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

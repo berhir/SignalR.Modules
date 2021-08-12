@@ -6,10 +6,15 @@ namespace SignalR.Modules
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddSignalRModuleHub<THub>(this IServiceCollection services)
-            where THub : ModulesEntryHub
+        /// <summary>
+        /// Add all SignalR modules specified in the <see cref="SignalRModuleHubAttribute"/>s of the entry hub. 
+        /// </summary>
+        /// <typeparam name="TEntryHub">The hub that is used as the entry hub for all specified module hubs.</typeparam>
+        /// <param name="services">The service collection.</param>
+        public static void AddSignalRModules<TEntryHub>(this IServiceCollection services)
+            where TEntryHub : ModulesEntryHub
         {
-            var mainHubType = typeof(THub);
+            var mainHubType = typeof(TEntryHub);
 
             var attributes = mainHubType.GetCustomAttributes(typeof(SignalRModuleHubAttribute), false)
                 .Cast<SignalRModuleHubAttribute>();
