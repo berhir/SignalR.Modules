@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -11,16 +11,6 @@ namespace SignalR.Modules.Client
     /// </summary>
     public static partial class ModuleHubClientExtensions
     {
-        private static IDisposable On(this ModuleHubClient hubConnection, string methodName, Type[] parameterTypes, Action<object[]> handler)
-        {
-            return hubConnection.On(methodName, parameterTypes, (parameters, state) =>
-            {
-                var currentHandler = (Action<object[]>)state;
-                currentHandler(parameters);
-                return Task.CompletedTask;
-            }, handler);
-        }
-
         /// <summary>
         /// Registers a handler that will be invoked when the hub method with the specified method name is invoked.
         /// </summary>
@@ -53,7 +43,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1) },
                 args => handler((T1)args[0]));
         }
@@ -74,7 +65,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2) },
                 args => handler((T1)args[0], (T2)args[1]));
         }
@@ -96,7 +88,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2]));
         }
@@ -119,7 +112,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3]));
         }
@@ -143,7 +137,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3], (T5)args[4]));
         }
@@ -168,7 +163,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3], (T5)args[4], (T6)args[5]));
         }
@@ -194,7 +190,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3], (T5)args[4], (T6)args[5], (T7)args[6]));
         }
@@ -221,7 +218,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3], (T5)args[4], (T6)args[5], (T7)args[6], (T8)args[7]));
         }
@@ -236,11 +234,15 @@ namespace SignalR.Modules.Client
         /// <returns>A subscription that can be disposed to unsubscribe from the hub method.</returns>
         public static IDisposable On(this ModuleHubClient hubConnection, string methodName, Type[] parameterTypes, Func<object[], Task> handler)
         {
-            return hubConnection.On(methodName, parameterTypes, (parameters, state) =>
-            {
-                var currentHandler = (Func<object[], Task>)state;
-                return currentHandler(parameters);
-            }, handler);
+            return hubConnection.On(
+                methodName,
+                parameterTypes,
+                (parameters, state) =>
+                {
+                    var currentHandler = (Func<object[], Task>)state;
+                    return currentHandler(parameters);
+                },
+                handler);
         }
 
         /// <summary>
@@ -275,7 +277,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1) },
                 args => handler((T1)args[0]));
         }
@@ -296,7 +299,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2) },
                 args => handler((T1)args[0], (T2)args[1]));
         }
@@ -318,7 +322,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2]));
         }
@@ -341,7 +346,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3]));
         }
@@ -365,7 +371,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3], (T5)args[4]));
         }
@@ -390,7 +397,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3], (T5)args[4], (T6)args[5]));
         }
@@ -416,7 +424,8 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3], (T5)args[4], (T6)args[5], (T7)args[6]));
         }
@@ -443,9 +452,24 @@ namespace SignalR.Modules.Client
                 throw new ArgumentNullException(nameof(hubConnection));
             }
 
-            return hubConnection.On(methodName,
+            return hubConnection.On(
+                methodName,
                 new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8) },
                 args => handler((T1)args[0], (T2)args[1], (T3)args[2], (T4)args[3], (T5)args[4], (T6)args[5], (T7)args[6], (T8)args[7]));
+        }
+
+        private static IDisposable On(this ModuleHubClient hubConnection, string methodName, Type[] parameterTypes, Action<object[]> handler)
+        {
+            return hubConnection.On(
+                methodName,
+                parameterTypes,
+                (parameters, state) =>
+                {
+                    var currentHandler = (Action<object[]>)state;
+                    currentHandler(parameters);
+                    return Task.CompletedTask;
+                },
+                handler);
         }
     }
 }

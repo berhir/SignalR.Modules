@@ -1,19 +1,19 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Threading.Channels;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 
 namespace SignalR.Modules.Client
 {
-	/// <summary>
-	/// Extension methods for <see cref="ModuleHubClient"/>.
-	/// </summary>
-	public static partial class ModuleHubClientExtensions
-	{
+    /// <summary>
+    /// Extension methods for <see cref="ModuleHubClient"/>.
+    /// </summary>
+    public static partial class ModuleHubClientExtensions
+    {
         /// <summary>
         /// Invokes a streaming hub method on the server using the specified method name and return type.
         /// </summary>

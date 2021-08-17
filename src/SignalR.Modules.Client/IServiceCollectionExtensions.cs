@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
@@ -7,13 +7,6 @@ namespace SignalR.Modules.Client
 {
     public static class IServiceCollectionExtensions
     {
-        private static IHubConnectionBuilder UseModuleHubDefault(this IHubConnectionBuilder builder, Uri hubUri)
-        {
-            return builder
-                .WithUrl(hubUri)
-                .WithAutomaticReconnect();
-        }
-
         public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string mainHubName, Uri hubUri)
         {
             return services.AddSignalRModules(mainHubName, options => options.Builder = builder => builder.UseModuleHubDefault(hubUri));
@@ -39,6 +32,13 @@ namespace SignalR.Modules.Client
             var clientBuilder = new ModuleHubClientBuilder(services, mainHubName);
 
             return clientBuilder;
+        }
+
+        private static IHubConnectionBuilder UseModuleHubDefault(this IHubConnectionBuilder builder, Uri hubUri)
+        {
+            return builder
+                .WithUrl(hubUri)
+                .WithAutomaticReconnect();
         }
     }
 }

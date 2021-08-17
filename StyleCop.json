@@ -1,0 +1,26 @@
+{
+  // StyleCop Configuration
+  // https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md
+
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Guid.New GmbH",
+      "documentExposedElements": false,
+      "documentInterfaces": false,
+      "documentInternalElements": false,
+      "documentPrivateElements": false,
+      "documentPrivateFields": false
+    },
+    "orderingRules": {
+      "systemUsingDirectivesFirst": false,
+      "usingDirectivesPlacement": "outsideNamespace"
+    },
+    "maintainabilityRules": {
+      "topLevelTypes": [ "class", "interface" ]
+    },
+    "layoutRules": {
+      "newlineAtEndOfFile": "require"
+    }
+  }
+}

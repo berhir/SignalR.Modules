@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
 
@@ -24,6 +24,7 @@ namespace SignalR.Modules
                 CheckDisposed();
                 return _clients;
             }
+
             set
             {
                 CheckDisposed();
@@ -41,6 +42,7 @@ namespace SignalR.Modules
                 CheckDisposed();
                 return _context;
             }
+
             set
             {
                 CheckDisposed();
@@ -58,6 +60,7 @@ namespace SignalR.Modules
                 CheckDisposed();
                 return _groups;
             }
+
             set
             {
                 CheckDisposed();
@@ -83,15 +86,6 @@ namespace SignalR.Modules
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Releases all resources currently used by this <see cref="Hub"/> instance.
-        /// </summary>
-        /// <param name="disposing"><c>true</c> if this method is being invoked by the <see cref="Dispose()"/> method,
-        /// otherwise <c>false</c>.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-        }
-
         /// <inheritdoc />
         public void Dispose()
         {
@@ -103,6 +97,15 @@ namespace SignalR.Modules
             Dispose(true);
 
             _disposed = true;
+        }
+
+        /// <summary>
+        /// Releases all resources currently used by this <see cref="Hub"/> instance.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> if this method is being invoked by the <see cref="Dispose()"/> method,
+        /// otherwise <c>false</c>.</param>
+        protected virtual void Dispose(bool disposing)
+        {
         }
 
         private void CheckDisposed()

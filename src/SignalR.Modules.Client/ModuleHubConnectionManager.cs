@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Concurrent;

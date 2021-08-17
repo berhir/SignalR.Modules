@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using SignalR.Modules.Client;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using SignalR.Modules.Client;
 using WeatherModule.Client;
 
 namespace BlazorSignalR.Client

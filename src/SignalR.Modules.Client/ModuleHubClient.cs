@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,12 +9,12 @@ namespace SignalR.Modules.Client
 {
     public abstract class ModuleHubClient : IDisposable
     {
+        private readonly SubscriptionList _subscriptions = new();
         private bool _disposed;
         private bool _initialized;
         private ModuleHubConnectionManager _connectionManager;
         private string _mainHubName;
         private string _moduleHubName;
-        private readonly SubscriptionList _subscriptions = new();
 
         public void Initialize(ModuleHubConnectionManager connectionManager, string mainHubName, string moduleHubName)
         {
@@ -96,6 +96,13 @@ namespace SignalR.Modules.Client
             return Task.CompletedTask;
         }
 
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         protected virtual void OnInitialized()
         {
         }
@@ -120,13 +127,6 @@ namespace SignalR.Modules.Client
 
             _connectionManager.Detach(this);
             _disposed = true;
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         private void CheckState()

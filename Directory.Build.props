@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <!-- Treat warnings as errors only in release configuration. This offers higher flexibility while developing. -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>0.0.0.0-dev</Version>
+    <InformationalVersion>* Local Development Build *</InformationalVersion>
+    <Authors>Bernd Hirschmann</Authors>
+    <Company>Guid.New GmbH</Company>
+    <Product>SignalR.Modules</Product>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)Analyzers.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)StyleCop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.354">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

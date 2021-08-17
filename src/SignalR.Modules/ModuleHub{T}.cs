@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR;
 using System;
 
 namespace SignalR.Modules
@@ -22,6 +22,7 @@ namespace SignalR.Modules
                 CheckDisposed();
                 return _clients;
             }
+
             set
             {
                 CheckDisposed();

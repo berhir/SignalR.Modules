@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,53 +9,53 @@ namespace SignalR.Modules
     public class ModuleHubTypedClients<TModuleHubClient> : IHubClients<TModuleHubClient>
         where TModuleHubClient : class
     {
-        private readonly IHubClients<IClientProxy> hubCallerClients;
+        private readonly IHubClients<IClientProxy> _hubCallerClients;
 
         public ModuleHubTypedClients(IHubClients<IClientProxy> hubContext)
         {
-            hubCallerClients = hubContext;
+            _hubCallerClients = hubContext;
         }
 
-        public TModuleHubClient All => CreateClient(hubCallerClients.All);
+        public TModuleHubClient All => CreateClient(_hubCallerClients.All);
 
         public TModuleHubClient AllExcept(IReadOnlyList<string> excludedConnectionIds)
         {
-            return CreateClient(hubCallerClients.AllExcept(excludedConnectionIds));
+            return CreateClient(_hubCallerClients.AllExcept(excludedConnectionIds));
         }
 
         public TModuleHubClient Client(string connectionId)
         {
-            return CreateClient(hubCallerClients.Client(connectionId));
+            return CreateClient(_hubCallerClients.Client(connectionId));
         }
 
         public TModuleHubClient Group(string groupName)
         {
-            return CreateClient(hubCallerClients.Group(groupName));
+            return CreateClient(_hubCallerClients.Group(groupName));
         }
 
         public TModuleHubClient GroupExcept(string groupName, IReadOnlyList<string> excludedConnectionIds)
         {
-            return CreateClient(hubCallerClients.GroupExcept(groupName, excludedConnectionIds));
+            return CreateClient(_hubCallerClients.GroupExcept(groupName, excludedConnectionIds));
         }
 
         public TModuleHubClient Groups(IReadOnlyList<string> groupNames)
         {
-            return CreateClient(hubCallerClients.Groups(groupNames));
+            return CreateClient(_hubCallerClients.Groups(groupNames));
         }
 
         public TModuleHubClient User(string userId)
         {
-            return CreateClient(hubCallerClients.Users(userId));
+            return CreateClient(_hubCallerClients.Users(userId));
         }
 
         public TModuleHubClient Users(IReadOnlyList<string> userIds)
         {
-            return CreateClient(hubCallerClients.Users(userIds));
+            return CreateClient(_hubCallerClients.Users(userIds));
         }
 
         TModuleHubClient IHubClients<TModuleHubClient>.Clients(IReadOnlyList<string> connectionIds)
         {
-            return CreateClient(hubCallerClients.Clients(connectionIds));
+            return CreateClient(_hubCallerClients.Clients(connectionIds));
         }
 
         protected virtual TModuleHubClient CreateClient(IClientProxy clientProxy)
@@ -71,7 +71,11 @@ namespace SignalR.Modules
 
         private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
         {
-            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+            if (assembly == null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
             try
             {
                 return assembly.GetTypes();

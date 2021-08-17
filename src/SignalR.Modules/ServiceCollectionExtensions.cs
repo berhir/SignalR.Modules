@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
@@ -7,7 +7,7 @@ namespace SignalR.Modules
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Add all SignalR modules specified in the <see cref="SignalRModuleHubAttribute"/>s of the entry hub. 
+        /// Add all SignalR modules specified in the <see cref="SignalRModuleHubAttribute"/>s of the entry hub.
         /// </summary>
         /// <typeparam name="TEntryHub">The hub that is used as the entry hub for all specified module hubs.</typeparam>
         /// <param name="services">The service collection.</param>
@@ -31,7 +31,7 @@ namespace SignalR.Modules
                     var contextImplementationType = typeof(ModuleHubContext<,>).MakeGenericType(mainHubType, moduleHubType);
                     services.AddSingleton(contextInterfaceType, contextImplementationType);
                 }
-                else if(baseType != null && baseType.IsGenericType && baseType.GetGenericTypeDefinition().Equals(typeof(ModuleHub<>)))
+                else if (baseType != null && baseType.IsGenericType && baseType.GetGenericTypeDefinition().Equals(typeof(ModuleHub<>)))
                 {
                     services.AddTransient(moduleHubType);
                     var moduleHubTypedType = baseType.GetGenericArguments()[0];

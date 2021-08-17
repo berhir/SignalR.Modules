@@ -1,4 +1,4 @@
-﻿using BlazorSignalR.Server.SignalRModules;
+using BlazorSignalR.Server.SignalRModules;
 using ChatModule.Server;
 using Microsoft.Extensions.Logging;
 using SignalR.Modules;
@@ -14,6 +14,7 @@ namespace BlazorSignalR.Server.Hubs
     {
         public MainHub(ILogger<MainHub> logger, IServiceProvider serviceProvider)
             : base(logger, serviceProvider)
-        { }
+        {
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 using SignalR.Modules;
+using System.Threading.Tasks;
 
 namespace ChatModule.Server
 {

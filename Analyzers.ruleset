@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Guid.New Recommended Rules" Description="These rules are used as a base for all Guid.New projects." ToolsVersion="16.0">
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS0612" Action="Info" />
+    <Rule Id="CS0618" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1101" Action="None" />
+    <Rule Id="SA1201" Action="None" />
+    <Rule Id="SA1309" Action="None" />
+    <Rule Id="SA1633" Action="None" />
+    <Rule Id="SX1101" Action="Warning" />
+    <Rule Id="SX1309" Action="Warning" />
+  </Rules>
+</RuleSet>
