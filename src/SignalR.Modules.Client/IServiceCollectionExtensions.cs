@@ -7,29 +7,29 @@ namespace SignalR.Modules.Client
 {
     public static class IServiceCollectionExtensions
     {
-        public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string mainHubName, Uri hubUri)
+        public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string entryHubName, Uri hubUri)
         {
-            return services.AddSignalRModules(mainHubName, options => options.Builder = builder => builder.UseModuleHubDefault(hubUri));
+            return services.AddSignalRModules(entryHubName, options => options.Builder = builder => builder.UseModuleHubDefault(hubUri));
         }
 
-        public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string mainHubName, Func<IServiceProvider, Uri> hubUri)
+        public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string entryHubName, Func<IServiceProvider, Uri> hubUri)
         {
-            return services.AddSignalRModules(mainHubName, (options, sp) => options.Builder = builder => builder.UseModuleHubDefault(hubUri(sp)));
+            return services.AddSignalRModules(entryHubName, (options, sp) => options.Builder = builder => builder.UseModuleHubDefault(hubUri(sp)));
         }
 
-        public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string mainHubName, Action<ModuleHubConnectionOptions> options)
+        public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string entryHubName, Action<ModuleHubConnectionOptions> options)
         {
-            return services.AddSignalRModules(mainHubName, (op, _) => options(op));
+            return services.AddSignalRModules(entryHubName, (op, _) => options(op));
         }
 
-        public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string mainHubName, Action<ModuleHubConnectionOptions, IServiceProvider> options)
+        public static ModuleHubClientBuilder AddSignalRModules(this IServiceCollection services, string entryHubName, Action<ModuleHubConnectionOptions, IServiceProvider> options)
         {
             services.TryAddSingleton<ModuleHubConnectionManager>();
 
-            services.AddOptions<ModuleHubConnectionOptions>(mainHubName)
+            services.AddOptions<ModuleHubConnectionOptions>(entryHubName)
                 .Configure(options);
 
-            var clientBuilder = new ModuleHubClientBuilder(services, mainHubName);
+            var clientBuilder = new ModuleHubClientBuilder(services, entryHubName);
 
             return clientBuilder;
         }

@@ -13,10 +13,10 @@ namespace SignalR.Modules.Client
         private bool _disposed;
         private bool _initialized;
         private ModuleHubConnectionManager _connectionManager = default!;
-        private string _mainHubName = string.Empty;
+        private string _entryHubName = string.Empty;
         private string _moduleHubName = string.Empty;
 
-        public void Initialize(ModuleHubConnectionManager connectionManager, string mainHubName, string moduleHubName)
+        public void Initialize(ModuleHubConnectionManager connectionManager, string entryHubName, string moduleHubName)
         {
             if (_initialized)
             {
@@ -24,7 +24,7 @@ namespace SignalR.Modules.Client
             }
 
             _connectionManager = connectionManager;
-            _mainHubName = mainHubName;
+            _entryHubName = entryHubName;
             _moduleHubName = moduleHubName;
 
             _initialized = true;
@@ -42,12 +42,12 @@ namespace SignalR.Modules.Client
             OnInitialized();
         }
 
-        public string MainHubName
+        public string EntryHubName
         {
             get
             {
                 CheckState();
-                return _mainHubName;
+                return _entryHubName;
             }
         }
 

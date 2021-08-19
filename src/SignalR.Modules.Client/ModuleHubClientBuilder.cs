@@ -9,13 +9,13 @@ namespace SignalR.Modules.Client
 
         private readonly IServiceCollection _services;
 
-        public ModuleHubClientBuilder(IServiceCollection services, string mainHubName)
+        public ModuleHubClientBuilder(IServiceCollection services, string entryHubName)
         {
             _services = services;
-            MainHubName = mainHubName;
+            EntryHubName = entryHubName;
         }
 
-        public string MainHubName { get; }
+        public string EntryHubName { get; }
 
         public ModuleHubClientBuilder AddModuleHubClient<TClient>()
             where TClient : ModuleHubClient
@@ -43,7 +43,7 @@ namespace SignalR.Modules.Client
                 sp =>
                 {
                     var client = ActivatorUtilities.CreateInstance<TClient>(sp);
-                    client.Initialize(sp.GetRequiredService<ModuleHubConnectionManager>(), MainHubName, moduleHubName);
+                    client.Initialize(sp.GetRequiredService<ModuleHubConnectionManager>(), EntryHubName, moduleHubName);
                     return client;
                 },
                 lifetime);

@@ -27,7 +27,7 @@ namespace SignalR.Modules.Client
                 throw new Exception("Client is already attached");
             }
 
-            var connection = EnsureConnection(client.MainHubName);
+            var connection = EnsureConnection(client.EntryHubName);
 
             connection.Closed += client.OnConnectionClosed;
             connection.Reconnecting += client.OnConnectionReconnecting;
@@ -83,7 +83,7 @@ namespace SignalR.Modules.Client
             }
 
             // todo: where start the connection?
-            var connection = EnsureConnection(client.MainHubName);
+            var connection = EnsureConnection(client.EntryHubName);
 
             if (connection.State == HubConnectionState.Disconnected)
             {
@@ -110,7 +110,7 @@ namespace SignalR.Modules.Client
                 throw new ArgumentException("The client is not attached", nameof(client));
             }
 
-            if (!_connections.TryGetValue(client.MainHubName, out var connection))
+            if (!_connections.TryGetValue(client.EntryHubName, out var connection))
             {
                 throw new Exception("Connection for client not found");
             }
@@ -118,11 +118,11 @@ namespace SignalR.Modules.Client
             return connection;
         }
 
-        private HubConnection EnsureConnection(string mainHubName)
+        private HubConnection EnsureConnection(string entryHubName)
         {
-            return _connections.GetOrAdd(mainHubName, (hubName) =>
+            return _connections.GetOrAdd(entryHubName, (hubName) =>
             {
-                var options = _connectionOptions.Get(mainHubName);
+                var options = _connectionOptions.Get(entryHubName);
                 var builder = new HubConnectionBuilder();
 
                 if (options.Builder == null)

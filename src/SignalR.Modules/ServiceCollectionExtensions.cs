@@ -14,9 +14,9 @@ namespace SignalR.Modules
         public static void AddSignalRModules<TEntryHub>(this IServiceCollection services)
             where TEntryHub : ModulesEntryHub
         {
-            var mainHubType = typeof(TEntryHub);
+            var entryHubType = typeof(TEntryHub);
 
-            var attributes = mainHubType.GetCustomAttributes(typeof(SignalRModuleHubAttribute), false)
+            var attributes = entryHubType.GetCustomAttributes(typeof(SignalRModuleHubAttribute), false)
                 .Cast<SignalRModuleHubAttribute>();
 
             foreach (var attribute in attributes)
@@ -28,7 +28,7 @@ namespace SignalR.Modules
                 {
                     services.AddTransient(moduleHubType);
                     var contextInterfaceType = typeof(IModuleHubContext<>).MakeGenericType(moduleHubType);
-                    var contextImplementationType = typeof(ModuleHubContext<,>).MakeGenericType(mainHubType, moduleHubType);
+                    var contextImplementationType = typeof(ModuleHubContext<,>).MakeGenericType(entryHubType, moduleHubType);
                     services.AddSingleton(contextInterfaceType, contextImplementationType);
                 }
                 else if (baseType != null && baseType.IsGenericType && baseType.GetGenericTypeDefinition().Equals(typeof(ModuleHub<>)))
@@ -36,7 +36,7 @@ namespace SignalR.Modules
                     services.AddTransient(moduleHubType);
                     var moduleHubTypedType = baseType.GetGenericArguments()[0];
                     var contextInterfaceType = typeof(IModuleHubContext<,>).MakeGenericType(moduleHubType, moduleHubTypedType);
-                    var contextImplementationType = typeof(ModuleHubContext<,,>).MakeGenericType(mainHubType, moduleHubType, moduleHubTypedType);
+                    var contextImplementationType = typeof(ModuleHubContext<,,>).MakeGenericType(entryHubType, moduleHubType, moduleHubTypedType);
                     services.AddSingleton(contextInterfaceType, contextImplementationType);
                 }
                 else

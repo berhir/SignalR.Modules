@@ -1,15 +1,15 @@
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 
 namespace SignalR.Modules
 {
-    public class ModuleHubContext<TMainHub, TModuleHub, TModuleHubTyped> : IModuleHubContext<TModuleHub, TModuleHubTyped>
-        where TMainHub : ModulesEntryHub
+    public class ModuleHubContext<TEntryHub, TModuleHub, TModuleHubTyped> : IModuleHubContext<TModuleHub, TModuleHubTyped>
+        where TEntryHub : ModulesEntryHub
         where TModuleHub : ModuleHub<TModuleHubTyped>
         where TModuleHubTyped : class
     {
-        private readonly IHubContext<TMainHub> _hubContext;
+        private readonly IHubContext<TEntryHub> _hubContext;
 
-        public ModuleHubContext(IHubContext<TMainHub> hubContext)
+        public ModuleHubContext(IHubContext<TEntryHub> hubContext)
         {
             _hubContext = hubContext;
 

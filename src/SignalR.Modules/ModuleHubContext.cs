@@ -2,13 +2,13 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace SignalR.Modules
 {
-    public class ModuleHubContext<TMainHub, TModuleHub> : IModuleHubContext<TModuleHub>
-        where TMainHub : ModulesEntryHub
+    public class ModuleHubContext<TEntryHub, TModuleHub> : IModuleHubContext<TModuleHub>
+        where TEntryHub : ModulesEntryHub
         where TModuleHub : ModuleHub
     {
-        private readonly IHubContext<TMainHub> _hubContext;
+        private readonly IHubContext<TEntryHub> _hubContext;
 
-        public ModuleHubContext(IHubContext<TMainHub> hubContext)
+        public ModuleHubContext(IHubContext<TEntryHub> hubContext)
         {
             _hubContext = hubContext;
 
