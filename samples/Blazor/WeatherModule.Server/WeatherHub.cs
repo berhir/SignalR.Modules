@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using SignalR.Modules;
+using System;
 using System.Threading.Tasks;
 
 namespace WeatherModule.Server
@@ -18,9 +19,15 @@ namespace WeatherModule.Server
         public override async Task OnConnectedAsync()
         {
             // this is only for demo purpose. automatically subscribing is not recommended.
-            // weather data will be sent to the client even if the user is on a page that does not handle it.
+            // because weather data will be sent to the client even if the user is on a page that does not handle it.
             await Groups.AddToGroupAsync(Context.ConnectionId, WeatherUpdatesGroupName);
             await base.OnConnectedAsync();
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, WeatherUpdatesGroupName);
+            await base.OnDisconnectedAsync(exception);
         }
 
         public async Task SendSubscribeWeatherUpdates()
