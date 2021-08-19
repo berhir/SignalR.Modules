@@ -15,7 +15,7 @@ namespace SignalR.Modules
             _clientProxy = clientProxy;
         }
 
-        protected Task SendAsync(string name, object[] args, CancellationToken cancellationToken = default)
+        protected Task SendAsync(string name, object?[]? args, CancellationToken cancellationToken = default)
         {
             return _clientProxy.SendCoreAsync($"{_name}_{name}", args, cancellationToken);
         }

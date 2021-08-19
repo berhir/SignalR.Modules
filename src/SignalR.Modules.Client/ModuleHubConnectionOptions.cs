@@ -5,6 +5,6 @@ namespace SignalR.Modules.Client
 {
     public class ModuleHubConnectionOptions
     {
-        public Action<IHubConnectionBuilder> Builder { get; set; }
+        public Action<IHubConnectionBuilder>? Builder { get; set; }
     }
 }

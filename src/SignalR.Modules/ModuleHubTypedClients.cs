@@ -66,7 +66,7 @@ namespace SignalR.Modules
             var implType = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => GetLoadableTypes(a))
                 .Single(t => interfaceType.IsAssignableFrom(t) && !t.IsAbstract);
-            return Activator.CreateInstance(implType, clientProxy) as TModuleHubClient;
+            return (TModuleHubClient)Activator.CreateInstance(implType, clientProxy)!;
         }
 
         private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
@@ -82,7 +82,7 @@ namespace SignalR.Modules
             }
             catch (ReflectionTypeLoadException e)
             {
-                return e.Types.Where(t => t != null);
+                return e.Types.Where(t => t != null).Select(t => t!);
             }
         }
     }

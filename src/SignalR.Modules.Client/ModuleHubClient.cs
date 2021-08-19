@@ -12,9 +12,9 @@ namespace SignalR.Modules.Client
         private readonly SubscriptionList _subscriptions = new();
         private bool _disposed;
         private bool _initialized;
-        private ModuleHubConnectionManager _connectionManager;
-        private string _mainHubName;
-        private string _moduleHubName;
+        private ModuleHubConnectionManager _connectionManager = default!;
+        private string _mainHubName = string.Empty;
+        private string _moduleHubName = string.Empty;
 
         public void Initialize(ModuleHubConnectionManager connectionManager, string mainHubName, string moduleHubName)
         {
@@ -27,18 +27,56 @@ namespace SignalR.Modules.Client
             _mainHubName = mainHubName;
             _moduleHubName = moduleHubName;
 
-            _connectionManager.Attach(this);
             _initialized = true;
+
+            try
+            {
+                _connectionManager.Attach(this);
+            }
+            catch
+            {
+                _initialized = false;
+                throw;
+            }
+
             OnInitialized();
         }
 
-        public string MainHubName => _mainHubName;
+        public string MainHubName
+        {
+            get
+            {
+                CheckState();
+                return _mainHubName;
+            }
+        }
 
-        public string ModuleHubName => _moduleHubName;
+        public string ModuleHubName
+        {
+            get
+            {
+                CheckState();
+                return _moduleHubName;
+            }
+        }
 
-        public HubConnectionState State => _connectionManager.GetState(this);
+        public HubConnectionState State
+        {
+            get
+            {
+                CheckState();
+                return _connectionManager.GetState(this);
+            }
+        }
 
-        public string ConnectionId => _connectionManager.GetConnectionId(this);
+        public string ConnectionId
+        {
+            get
+            {
+                CheckState();
+                return _connectionManager.GetConnectionId(this);
+            }
+        }
 
         public IDisposable On(string methodName, Type[] parameterTypes, Func<object[], object, Task> handler, object state)
         {
@@ -54,6 +92,7 @@ namespace SignalR.Modules.Client
 
         public async Task EnsureConnectionStartedAsync()
         {
+            CheckState();
             await _connectionManager.EnsureConnectionStartedAsync(this);
         }
 
@@ -125,7 +164,7 @@ namespace SignalR.Modules.Client
                 subscription.Dispose();
             }
 
-            _connectionManager.Detach(this);
+            _connectionManager?.Detach(this);
             _disposed = true;
         }
 

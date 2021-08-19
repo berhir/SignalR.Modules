@@ -18,7 +18,7 @@ namespace WeatherModule.Server
 
         private readonly ILogger<WeatherUpdateHostedService> _logger;
         private readonly IModuleHubContext<WeatherHub, IWeatherClient> _hubContext;
-        private Timer _timer;
+        private Timer? _timer;
 
         public WeatherUpdateHostedService(ILogger<WeatherUpdateHostedService> logger, IModuleHubContext<WeatherHub, IWeatherClient> hubContext)
         {
@@ -49,7 +49,7 @@ namespace WeatherModule.Server
             _timer?.Dispose();
         }
 
-        private void SendWeatherUpdate(object state)
+        private void SendWeatherUpdate(object? state)
         {
             var rng = new Random();
             var forecast = Enumerable.Range(1, 5).Select(index => new WeatherForecast

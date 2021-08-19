@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.AspNetCore.SignalR.Client
 @using SignalR.Modules.Client;
 @page "/chat"
 @inherits OwningComponentBase<ChatHubClient>
@@ -30,8 +30,8 @@
 
 @code {
 	private List<string> messages = new List<string>();
-	private string userInput;
-	private string messageInput;
+	private string userInput = string.Empty;
+	private string messageInput = string.Empty;
 
 	private ChatHubClient ChatHub => Service;
 

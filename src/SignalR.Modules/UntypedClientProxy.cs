@@ -12,7 +12,7 @@ namespace SignalR.Modules
         {
         }
 
-        public Task SendCoreAsync(string method, object[] args, CancellationToken cancellationToken = default)
+        public Task SendCoreAsync(string method, object?[]? args, CancellationToken cancellationToken = default)
         {
             return SendAsync(method, args, cancellationToken);
         }

@@ -8,7 +8,7 @@ namespace WeatherModule.Client
     {
         public delegate void ReceivedWeatherUpdateEventHandler(object sender, ReceivedWeatherUpdateEventArgs e);
 
-        public event ReceivedWeatherUpdateEventHandler ReceivedWeatherUpdate;
+        public event ReceivedWeatherUpdateEventHandler? ReceivedWeatherUpdate;
 
         public async Task Subscribe()
         {
@@ -25,10 +25,7 @@ namespace WeatherModule.Client
             this.On<WeatherForecast[]>("ReceiveWeatherUpdate", data =>
             {
                 var ev = ReceivedWeatherUpdate;
-                if (ev != null)
-                {
-                    ev.Invoke(this, new ReceivedWeatherUpdateEventArgs(data));
-                }
+                ev?.Invoke(this, new ReceivedWeatherUpdateEventArgs(data));
             });
             base.OnInitialized();
         }
