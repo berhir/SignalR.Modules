@@ -48,13 +48,13 @@ namespace SignalR.Modules.Generator
                     if (moduleHubType != null)
                     {
                         var hubSource = ProcessHubClass(mainHubClass, moduleHubType);
-                        context.AddSource($"{mainHubClass.Name}_{moduleHubType.Name}", hubSource);
+                        context.AddSource($"{mainHubClass.Name}_{moduleHubType.Name}.g", hubSource);
 
                         if (moduleHubType.BaseType!.IsGenericType)
                         {
                             var typedClientInterface = moduleHubType.BaseType.TypeArguments[0];
                             var hubClientSource = ProcessHubClientClass(mainHubClass, moduleHubType, typedClientInterface);
-                            context.AddSource($"{mainHubClass.Name}_{typedClientInterface.Name}Impl", hubClientSource);
+                            context.AddSource($"{mainHubClass.Name}_{typedClientInterface.Name}Impl.g", hubClientSource);
                         }
                     }
                 }
