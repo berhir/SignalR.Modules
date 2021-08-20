@@ -1,6 +1,12 @@
-﻿@using SignalR.Modules.Client;
+@using SignalR.Modules.Client;
 @page "/counter"
 @inherits OwningComponentBase<SignalRCounter>
+
+<div class="alert alert-info" role="alert">
+	This sample has a simple counter that gets increased whenever a user clicks on the button.<br />
+	The <i>IncrementCount</i> methods returns the new value for the user who clicks on the button.<br />
+	And a message with the new value gets sent to all other users.
+</div>
 
 <h1>Counter</h1>
 

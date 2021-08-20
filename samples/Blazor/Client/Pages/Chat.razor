@@ -4,6 +4,13 @@
 @inherits OwningComponentBase<ChatHubClient>
 @inject HttpClient Http
 
+<div class="alert alert-info" role="alert">
+	This sample uses the <i>ChatHub</i> module on the backend side, and the <i>ChatHubClient</i> on the client side.<br />
+	The code is very similar to the <a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr-blazor?view=aspnetcore-5.0&tabs=visual-studio&pivots=webassembly#add-razor-component-code-for-chat-2">sample code</a> in the docs.<br />
+	The SignalR connection is shared with other SignalR modules and stays open when leaving this page.<br />
+	It's possible to send messages via SignalR or via HTTP (using the <i>IModuleHubContext&lt;ChatHub&gt;</i> in the <i>ChatController</i>).
+</div>
+
 <div class="form-group">
 	<label>
 		User:

@@ -1,0 +1,70 @@
+@using Microsoft.AspNetCore.SignalR.Client
+@page "/chatBasic"
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
+
+<div class="alert alert-info" role="alert">
+	This sample uses the <i>ChatHub</i> module on the backend side, but uses regular SignalR on the client side (compare it to the <a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr-blazor?view=aspnetcore-5.0&tabs=visual-studio&pivots=webassembly#add-razor-component-code-for-chat-2">sample code</a> in the docs).<br />
+	The only difference is that the method names are prefixed: <i>ChatHub_ReceiveMessage</i> and <i>ChatHub_SendMessage</i>.<br />
+	The SignalR connection used in this sample is not shared and gets disposed when the user leaves this page.
+</div>
+
+<div class="form-group">
+	<label>
+		User:
+		<input @bind="userInput" />
+	</label>
+</div>
+<div class="form-group">
+	<label>
+		Message:
+		<input @bind="messageInput" size="50" />
+	</label>
+</div>
+<button @onclick="Send" disabled="@(!IsConnected)">Send</button>
+
+<hr>
+
+<ul id="messagesList">
+	@foreach (var message in messages)
+	{
+		<li>@message</li>
+	}
+</ul>
+
+@code {
+	private HubConnection hubConnection;
+	private List<string> messages = new List<string>();
+	private string userInput;
+	private string messageInput;
+
+	protected override async Task OnInitializedAsync()
+	{
+		hubConnection = new HubConnectionBuilder()
+			.WithUrl(NavigationManager.ToAbsoluteUri("/hub"))
+			.Build();
+
+		hubConnection.On<string, string>("ChatHub_ReceiveMessage", (user, message) =>
+		{
+			var encodedMsg = $"{user}: {message}";
+			messages.Add(encodedMsg);
+			StateHasChanged();
+		});
+
+		await hubConnection.StartAsync();
+	}
+
+	async Task Send() =>
+		await hubConnection.SendAsync("ChatHub_SendMessage", userInput, messageInput);
+
+	public bool IsConnected =>
+		hubConnection.State == HubConnectionState.Connected;
+
+	public async ValueTask DisposeAsync()
+	{
+		if (hubConnection is not null)
+		{
+			await hubConnection.DisposeAsync();
+		}
+	}
+}
