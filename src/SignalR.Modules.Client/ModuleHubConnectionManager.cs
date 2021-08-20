@@ -14,6 +14,8 @@ namespace SignalR.Modules.Client
         private readonly ConcurrentDictionary<string, HubConnection> _connections = new();
         private readonly ConcurrentDictionary<ModuleHubClient, string> _clients = new();
         private readonly IOptionsMonitor<ModuleHubConnectionOptions> _connectionOptions;
+        private readonly object _lock = new();
+        private Task? _startConnectionTask = default;
 
         public ModuleHubConnectionManager(IOptionsMonitor<ModuleHubConnectionOptions> connectionOptions)
         {
@@ -75,20 +77,37 @@ namespace SignalR.Modules.Client
             return connection.StreamAsyncCore<TResult>($"{client.ModuleHubName}_{methodName}", args, cancellationToken);
         }
 
-        public async Task EnsureConnectionStartedAsync(ModuleHubClient client)
+        public Task EnsureConnectionStartedAsync(ModuleHubClient client)
         {
             if (!_clients.ContainsKey(client))
             {
                 throw new ArgumentException("The client is not attached", nameof(client));
             }
 
-            // todo: where start the connection?
-            var connection = EnsureConnection(client.EntryHubName);
-
-            if (connection.State == HubConnectionState.Disconnected)
+            var task = _startConnectionTask;
+            if (task == null)
             {
-                await connection.StartAsync();
+                lock (_lock)
+                {
+                    task = _startConnectionTask;
+                    if (task == null)
+                    {
+                        var connection = EnsureConnection(client.EntryHubName);
+
+                        if (connection.State == HubConnectionState.Disconnected)
+                        {
+                            task = _startConnectionTask = connection.StartAsync();
+                            _startConnectionTask.ContinueWith((t) => _startConnectionTask = null);
+                        }
+                        else
+                        {
+                            return Task.CompletedTask;
+                        }
+                    }
+                }
             }
+
+            return task;
         }
 
         public HubConnectionState GetState(ModuleHubClient client)
