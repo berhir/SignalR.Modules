@@ -84,7 +84,7 @@ namespace {namespaceName}
     {{
 ");
             var moduleHubMethods = moduleHubTypeSymbol.GetMembers()
-                .Where(m => m.Kind == SymbolKind.Method && m.DeclaredAccessibility == Accessibility.Public && m.Name != ".ctor")
+                .Where(m => m.Kind == SymbolKind.Method && m.DeclaredAccessibility == Accessibility.Public && !m.IsOverride && m.Name != ".ctor")
                 .OfType<IMethodSymbol>()
                 .ToList();
 
