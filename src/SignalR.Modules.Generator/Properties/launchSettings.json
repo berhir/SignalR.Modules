@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SignalR.Modules.Generator": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\samples\\Blazor\\Server\\BlazorSignalR.Server.csproj"
+    }
+  }
+}
