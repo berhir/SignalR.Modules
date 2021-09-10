@@ -25,7 +25,7 @@ public class ChatHub : ModuleHub
 
 ## Use a module hub
 
-To use the module hub, create an ASP.NET Core project and add a reference to SignalR.Modules and SignalR.Modules.Generator.
+To use the module hub, create an ASP.NET Core project and add a reference to `SignalR.Modules` and `SignalR.Modules.Generator`.
 
 ```xml
 <ProjectReference
@@ -66,7 +66,7 @@ app.UseEndpoints(endpoints =>
 
 ## Strongly typed module hubs
 
-SignalR allows us to define [strongly typed hubs](https://docs.microsoft.com/en-us/aspnet/core/signalr/hubs?view=aspnetcore-5.0#strongly-typed-hubs) to avoid using magic strings. And you can do the same with SignalR modules by using ModuleHub<T>.
+SignalR allows us to define [strongly typed hubs](https://docs.microsoft.com/en-us/aspnet/core/signalr/hubs?view=aspnetcore-5.0#strongly-typed-hubs) to avoid using magic strings. And you can do the same with SignalR modules by using `ModuleHub<T>`.
 
 ```csharp
 public interface IWeatherClient
@@ -104,7 +104,7 @@ public class ChatController : ControllerBase
 }
 ```
 
-When you have a strongly typed module hub, you can use IModuleHubContext<WeatherHub, IWeatherClient>.
+When you have a strongly typed module hub, you can use `IModuleHubContext<WeatherHub, IWeatherClient>`.
 
 ## Using the ModuleHubClient
 
