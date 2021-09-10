@@ -6,6 +6,9 @@ The concept is based on the idea of organizing multiple hub methods in partial c
 But instead of putting everything in one project, SignalR modules can live in separate projects or NuGet packages.
 The partial classes get then generated using a C# Source Generator.
 
+This is an overview of how it works:
+![SignalR.Modules Overview](SignalRModulesOverview.drawio.png "SignalR.Modules Overview")
+
 ## Create a module hub
 
 To create a module hub, a reference to the SignalR.Modules project is needed. Then create a hub class as you would do with regular SignalR, but instead of `Hub` (or `Hub<T>`) use `ModuleHub` (or `ModuleHub<T>`) as base class.
