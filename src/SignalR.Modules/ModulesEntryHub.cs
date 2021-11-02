@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 
 namespace SignalR.Modules
@@ -13,6 +14,12 @@ namespace SignalR.Modules
         public ModulesEntryHub(ILogger logger, IServiceProvider serviceProvider)
         {
             Logger = logger;
+            ServiceProvider = serviceProvider;
+        }
+
+        public ModulesEntryHub(IServiceProvider serviceProvider)
+        {
+            Logger = NullLogger.Instance;
             ServiceProvider = serviceProvider;
         }
 
