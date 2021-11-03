@@ -88,9 +88,12 @@ namespace {namespaceName}
                 .OfType<IMethodSymbol>()
                 .ToList();
 
+            var classAttributes = moduleHubTypeSymbol.GetAttributes()
+                .Where(a => a.AttributeClass != null && !a.AttributeClass.ToString().StartsWith("System.Runtime.CompilerServices"));
+
             foreach (var hubMethod in moduleHubMethods)
             {
-                source.Append(ProcessModuleHubMethod(moduleHubTypeSymbol, hubMethod));
+                source.Append(ProcessModuleHubMethod(moduleHubTypeSymbol, hubMethod, classAttributes));
             }
 
             source.Append(@"
@@ -99,12 +102,15 @@ namespace {namespaceName}
             return source.ToString();
         }
 
-        private string ProcessModuleHubMethod(INamedTypeSymbol moduleHubTypeSymbol, IMethodSymbol methodSymbol)
+        private string ProcessModuleHubMethod(INamedTypeSymbol moduleHubTypeSymbol, IMethodSymbol methodSymbol, IEnumerable<AttributeData> classAttributes)
         {
             var source = new StringBuilder($@"
         ");
 
-            var attributes = methodSymbol.GetAttributes().Where(a => a.AttributeClass != null && !a.AttributeClass.ToString().StartsWith("System.Runtime.CompilerServices"));
+            var attributes = classAttributes.Concat(
+                methodSymbol.GetAttributes()
+                    .Where(a => a.AttributeClass != null && !a.AttributeClass.ToString().StartsWith("System.Runtime.CompilerServices")));
+
             foreach (var attribute in attributes)
             {
                 source.Append($@"[{attribute}]");
