@@ -2,6 +2,8 @@
 
 This sample shows how to build SignalR modules with a shared connection using a C# Source Generator.
 
+Read more about the background in my blog post "[SignalR modules with a shared connection using a C# Source Generator](https://guidnew.com/en/blog/signalr-modules-with-a-shared-connection-using-a-csharp-source-generator/)".
+
 The concept is based on the idea of organizing multiple hub methods in partial classes within the same project.
 But instead of putting everything in one project, SignalR modules can live in separate projects or NuGet packages.
 The partial classes get then generated using a C# Source Generator.
