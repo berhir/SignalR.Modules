@@ -138,7 +138,7 @@ using System.Threading.Tasks;
 
 namespace {namespaceName}
 {{
-    public class {className} : ClientProxy<{moduleHubTypeSymbol.Name}>, {typedClientInterface.Name}
+    public class {className} : ClientProxy<{moduleHubTypeSymbol.ToDisplayString()}>, {typedClientInterface.ToDisplayString()}
     {{
         public {className}(IClientProxy clientProxy)
             : base(clientProxy)
