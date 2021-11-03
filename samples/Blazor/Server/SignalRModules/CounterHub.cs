@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR;
 using SignalR.Modules;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +9,8 @@ namespace BlazorSignalR.Server.SignalRModules
     {
         private static int _count = 0;
 
-        public async Task<int> IncrementCount()
+        [HubMethodName("CounterHub_IncrementCount")]
+        public async Task<int> IncrementCountAsync()
         {
             var count = Interlocked.Increment(ref _count);
             await Clients.Others.SendAsync("ReceiveCount", _count);
