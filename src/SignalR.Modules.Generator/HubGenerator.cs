@@ -101,13 +101,25 @@ namespace {namespaceName}
 
         private string ProcessModuleHubMethod(INamedTypeSymbol moduleHubTypeSymbol, IMethodSymbol methodSymbol)
         {
-            return $@"
-        public {(methodSymbol.ReturnsVoid ? string.Empty : methodSymbol.ReturnType.ToDisplayString())} {moduleHubTypeSymbol.Name}_{methodSymbol.Name}({string.Join(", ", methodSymbol.Parameters.Select(p => $"{p.Type.ToDisplayString()} {p.Name}"))})
+            var source = new StringBuilder($@"
+        ");
+
+            var attributes = methodSymbol.GetAttributes().Where(a => a.AttributeClass != null && !a.AttributeClass.ToString().StartsWith("System.Runtime.CompilerServices"));
+            foreach (var attribute in attributes)
+            {
+                source.Append($@"[{attribute}]");
+                source.Append($@"
+        ");
+            }
+
+            source.Append($@"public {(methodSymbol.ReturnsVoid ? string.Empty : methodSymbol.ReturnType.ToDisplayString())} {moduleHubTypeSymbol.Name}_{methodSymbol.Name}({string.Join(", ", methodSymbol.Parameters.Select(p => $"{p.Type.ToDisplayString()} {p.Name}"))})
         {{
             var hub = ServiceProvider.GetRequiredService<{moduleHubTypeSymbol.ToDisplayString()}>();
             {(moduleHubTypeSymbol.BaseType!.IsGenericType ? $"InitModuleHub<{moduleHubTypeSymbol.BaseType.TypeArguments[0].ToDisplayString()}>(hub)" : "InitModuleHub(hub)")};
             {(methodSymbol.ReturnsVoid ? string.Empty : "return ")}hub.{methodSymbol.Name}({string.Join(", ", methodSymbol.Parameters.Select(p => p.Name))});
-        }}";
+        }}");
+
+            return source.ToString();
         }
 
         private string ProcessHubClientClass(INamedTypeSymbol entryHubTypeSymbol, INamedTypeSymbol moduleHubTypeSymbol, ITypeSymbol typedClientInterface)
